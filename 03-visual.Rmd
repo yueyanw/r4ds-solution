@@ -1,0 +1,16 @@
+# Data visualisation {#visual}
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(nycflights13)
+```
+
+
+3.6.1.6 "Recreate the R code necessary to generate the following graphs": the last graph
+```{r}
+ggplot(data = mpg, aes(x = displ, y = hwy)) +
+  geom_point(color = "white", size = 4) +
+  geom_point(aes(color = drv))
+```
+
+

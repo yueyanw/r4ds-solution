@@ -1,0 +1,47 @@
+# Exploratory Data Analysis
+
+Author: CW  
+Reviewer:
+
+## Introduction
+
+### Prerequisites
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+## Questions
+
+## Variation
+
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut))
+```
+```{r}
+smaller <- diamonds %>% 
+  filter(carat < 3)
+```
+
+### 7.3.4 Exercises {-}
+1. Explore the distribution of each of the `x`, `y`, and `z` variables in diamonds. What do you learn? Think about a diamond and how you might decide which dimension is the length, width, and depth.
+```{r}
+# remove false data points
+diamonds <- diamonds %>% filter(2 < y & y < 20 & 2 < x & 2 < z & z < 20)
+ggplot(diamonds) +
+  geom_freqpoly(aes(x = x), binwidth = 0.01)
+ggplot(diamonds) +
+  geom_freqpoly(aes(x = y), binwidth = 0.01)
+ggplot(diamonds) +
+  geom_freqpoly(aes(x = z), binwidth = 0.01)
+# x and y often share value
+ggplot(diamonds) +
+  geom_point(aes(x = x, y = y)) +
+  geom_point(aes(x = x, y = z), color = "blue") +
+  coord_fixed()
+```
+
+Seems like `x` and `y` should be length and width, and `z` is depth.
+
+
+

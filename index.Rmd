@@ -12,7 +12,7 @@ github-repo: chunjiw/r4ds-solution
 description: "This book provides selected solutions to the exercises in the wonderful book _R for Data Science_ by Wickham Hadley."
 ---
 
-# Welcome
+# Welcome {-}
 
 This is the website for "**Selected Solutions to R4DS Exercises**". This is a joint advanture between [Chunji Wang](https://chunjiw.rbind.io), Ron, Luna, Zhiyin, Chengcheng.... We started the "**R4DS Study Club**" on Sep 22nd, 2017; If you want to join us, please contact [us](mailto:chunjiw@gmail.com)!
 

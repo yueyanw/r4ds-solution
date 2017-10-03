@@ -1,12 +1,29 @@
 # Data transformation
 
-Author: Luna  
+Author: yueyanw  
 Reviewer: Chunji
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(nycflights13)
 ```
+### 5.2.4 Exercises
+1. Find all flights that
+    1. Had an arrival delay of two or more hours
+        ```{r}
+        filter(flights, arr_delay >= 120)
+        ```
+    2. Flew to Houston (`IAH` or `HOU`)
+        ```{r}
+        filter(flights, dest %in% c('IAH', 'HOU'))
+        ```
+    3. Were operated by United, American, or Delta
+    4. Departed in summer (July, August, and September)
+    5. Arrived more than two hours late, but didn’t leave late
+    6. Were delayed by at least an hour, but made up over 30 minutes in flight
+    7. Departed between midnight and 6am (inclusive)
+
+
 
 5.3.1.1 How could you use `arrange()` to sort all missing values to the start? (Hint: use `is.na()`).
 

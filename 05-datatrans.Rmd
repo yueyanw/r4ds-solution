@@ -18,12 +18,66 @@ library(nycflights13)
         filter(flights, dest %in% c('IAH', 'HOU'))
         ```
     3. Were operated by United, American, or Delta
+    We can look up the 2-character `carrier` code in the `airlines` dataset.
+        ```{r}
+        airlines
+        ```
+        United is `UA`, American is `AA`, and Delta is `DL`.
+        ```{r}
+        filter(flights, carrier %in% c('UA','AA','DL'))
+        ```
     4. Departed in summer (July, August, and September)
-    5. Arrived more than two hours late, but didn’t leave late
+        ```{r}
+        filter(flights, month %in% c(7,8,9))
+        ```
+    5. Arrived more than two hours late, but didn't leave late
+        ```{r}
+        filter(flights, arr_delay > 120 & dep_delay == 0)
+        ```
     6. Were delayed by at least an hour, but made up over 30 minutes in flight
+        ```{r}
+        filter(flights, dep_delay >= 60 & dep_delay - arr_delay >=30)
+        ```
     7. Departed between midnight and 6am (inclusive)
-
-
+    Midnight is recorded as `2400` instead of `0`
+        ```{r}
+        filter(flights, dep_time == 2400 | (dep_time >= 0000 & dep_time <= 0600))
+        ```
+2. Another useful dplyr filtering helper is `between()`. What does it do? Can you use it to simplify the code needed to answer the previous challenges?
+`between()` is a shortcut for `x >= left & x <= right`. Challenges 4. and 7. can be simplified as follows:
+    ```{r}
+    filter(flights, between(month, 7,9))
+    filter(flights, dep_time == 2400|between(dep_time, 0000,0600))
+    ```
+3. How many flights have a missing `dep_time`? What other variables are missing? What might these rows represent?
+8255 flights have a missing `dep_time`. `dep_delay`,`arr_time`, `arr_delay`, and `air_time` are also missing. These rows might represent cancelled flights.
+    ```{r}
+    sum(is.na(flights$dep_time))
+    summary(filter(flights, is.na(dep_time) == TRUE))
+    ```
+4. Why is `NA ^ 0` not missing? Why is `NA | TRUE` not missing? Why is `FALSE & NA` not missing? Can you figure out the general rule? (`NA * 0` is a tricky counterexample!)
+`NA ^ 0` is not missing, because any number to the zero power is 1.
+    ```{r}
+    NA ^ 0
+    ```
+`NA | TRUE` is not missing, because `TRUE` or any logical value always returns as `TRUE`. 
+    ```{r}
+    NA | TRUE
+    ```
+`FALSE & NA` is not missing, because `FALSE` and any logical always returns as `FALSE`. 
+    ```{r}
+    FALSE & NA
+    ```
+The general rule is that `NA` is treated as a placeholder for a logical value or numeric value. If the operation returns to a value regardless any possible value `NA` might take, it will return that value. 
+`NA * 0` returns `NA`, which seems counterintuitive, because we know that any number times 0 should return a 0. 
+    ```{r}
+    NA * 0
+    ```
+However, there is an exception. x * 0 is undefined when `x == Inf` or `x == -Inf`.
+    ```{r}
+    Inf * 0
+    -Inf *0
+    ```
 
 5.3.1.1 How could you use `arrange()` to sort all missing values to the start? (Hint: use `is.na()`).
 
